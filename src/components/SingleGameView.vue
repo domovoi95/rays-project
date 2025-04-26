@@ -11,7 +11,7 @@
 
       <div class="pitchers-row">
         <div class="pitcher-container">
-          <div class="team-name">{{ game.isHome ? 'Tampa Bay Rays' : game.opponent }}</div>
+          <div class="team-name">{{ game.isHome ? raysOrg.name : game.opponent }}</div>
           <div class="pitcher-image-container">
             <img
                 v-if="game.raysPitcherId"
@@ -36,7 +36,7 @@
         <div class="vs">vs</div>
 
         <div class="pitcher-container">
-          <div class="team-name">{{ game.isHome ? game.opponent : 'Tampa Bay Rays' }}</div>
+          <div class="team-name">{{ game.isHome ? game.opponent : raysOrg.name }}</div>
           <div class="pitcher-image-container">
             <img
                 v-if="game.opposingPitcherId"
@@ -68,8 +68,8 @@
             'loss-box': !game.raysWon && !game.isTie,
             'tie-box': game.isTie
           }">
-            {{ game.raysWon && !game.isTie ? 'Rays Win' :
-              !game.raysWon && !game.isTie ? 'Rays Loss' : 'Tie' }}
+            {{ game.raysWon && !game.isTie ? raysOrg.teamShort + ' Win' :
+              !game.raysWon && !game.isTie ? raysOrg.teamShort + ' Loss' : 'Tie' }}
           </span>
         </p>
         <p v-else>Status: {{ game.status }}</p>
@@ -97,33 +97,33 @@
             <tbody>
             <tr class="team-row">
               <td class="team-cell away-team">
-                {{ game.isHome ? game.opponent : 'Tampa Bay Rays' }}
+                {{ game.isHome ? game.opponent : raysOrg.name }}
               </td>
               <td
                   v-for="inning in linescore.innings"
                   :key="'away-' + inning.num"
                   class="inning-cell"
               >
-                {{ game.isHome ? inning.away.runs : inning.home.runs }}
+                {{ inning.away.runs }}
               </td>
-              <td class="total-cell">{{ game.isHome ? linescore.teams.away.runs : linescore.teams.home.runs }}</td>
-              <td class="total-cell">{{ game.isHome ? linescore.teams.away.hits : linescore.teams.home.hits }}</td>
-              <td class="total-cell">{{ game.isHome ? linescore.teams.away.errors : linescore.teams.home.errors }}</td>
+              <td class="total-cell">{{ linescore.teams.away.runs }}</td>
+              <td class="total-cell">{{ linescore.teams.away.hits }}</td>
+              <td class="total-cell">{{ linescore.teams.away.errors }}</td>
             </tr>
             <tr class="team-row">
               <td class="team-cell home-team">
-                {{ game.isHome ? 'Tampa Bay Rays' : game.opponent }}
+                {{ game.isHome ? raysOrg.name : game.opponent }}
               </td>
               <td
                   v-for="inning in linescore.innings"
                   :key="'home-' + inning.num"
                   class="inning-cell"
               >
-                {{ game.isHome ? inning.home.runs : inning.away.runs }}
+                {{ inning.home.runs }}
               </td>
-              <td class="total-cell">{{ game.isHome ? linescore.teams.home.runs : linescore.teams.away.runs }}</td>
-              <td class="total-cell">{{ game.isHome ? linescore.teams.home.hits : linescore.teams.away.hits }}</td>
-              <td class="total-cell">{{ game.isHome ? linescore.teams.home.errors : linescore.teams.away.errors }}</td>
+              <td class="total-cell">{{ linescore.teams.home.runs }}</td>
+              <td class="total-cell">{{ linescore.teams.home.hits }}</td>
+              <td class="total-cell">{{ linescore.teams.home.errors }}</td>
             </tr>
             </tbody>
           </table>
@@ -140,9 +140,9 @@
         <h3>Starting Pitching Comparison</h3>
         <div class="comparison-table">
           <div class="comparison-row header">
-            <div class="pitcher-stat rays">Rays</div>
-            <div class="stat-name">Stat</div>
-            <div class="pitcher-stat opponent">Opponent</div>
+            <div class="pitcher-stat rays">{{ raysOrg.name }}</div>
+            <div class="stat-name"></div>
+            <div class="pitcher-stat opponent">{{ game.opponent }}</div>
           </div>
 
           <div v-for="stat in displayedStats" :key="stat.key" class="comparison-row">
@@ -184,6 +184,16 @@ export default {
         raysWon: false,
         isTie: false
       })
+    },
+    raysOrg: {
+      type: Object,
+      required: true,
+      default: () => ({
+        id: 139,
+        name: 'Tampa Bay Rays',
+        sportId: 1,
+        teamShort: 'Rays'
+      })
     }
   },
   data() {
@@ -208,7 +218,7 @@ export default {
   methods: {
     formatDate(dateString) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
+      return new Date(dateString + "T00:00:00").toDateString(undefined, options);
     },
     formatStat(stats, key) {
       if (!stats || stats[key] === undefined || stats[key] === null) return '-';
@@ -374,6 +384,7 @@ export default {
   justify-content: center;
   overflow-x: auto;
   padding: 10px 0;
+  position: relative;
 }
 
 .linescore-table {
@@ -461,7 +472,6 @@ export default {
 .pitcher-stat {
   flex: 1;
   padding: 0 10px;
-  text-align: center;
 }
 
 .rays {
@@ -477,8 +487,6 @@ export default {
 .stat-name {
   flex: 1;
   padding: 0 10px;
-  text-align: center;
-  font-weight: bold;
 }
 
 .loading-linescore{
@@ -495,6 +503,11 @@ export default {
   text-align: center;
 }
 
+@media (max-width: 750px) {
+  .linescore-wrapper{
+    padding-left: 6rem;
+  }
+}
 @media (max-width: 680px) {
   .pitchers-row {
     gap: 20px;
@@ -538,9 +551,24 @@ export default {
   .inning-cell, .total-cell {
     padding: 6px 8px;
   }
+
+  .linescore-wrapper{
+    padding-left: 2rem;
+  }
+  .team-cell{
+    white-space: pre-wrap;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+  .linescore-wrapper{
+    padding-left: 8rem;
+  }
+}
 
+@media (max-width: 400px) {
+  .linescore-wrapper{
+    padding-left: 12rem;
+  }
 }
 </style>

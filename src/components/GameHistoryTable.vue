@@ -83,7 +83,7 @@
         Back to Game List
       </v-btn>
 
-      <single-game-view :game="selectedGame" />
+      <single-game-view :game="selectedGame" :raysOrg = "selectedTeam" />
     </div>
     <div v-else-if="filteredData.length > 0">
       <v-table>
@@ -161,7 +161,7 @@ export default {
       sortKey: 'date',
       sortOrder: 1,
       selectedGame: null,
-      selectedTeam: { id: 139, name: 'Tampa Bay Rays', sportId: 1 },
+      selectedTeam: { id: 139, name: 'Tampa Bay Rays', sportId: 1, teamShort: 'Rays' },
       startDate: '2025-03-01',
       endDate: new Date().toISOString().split('T')[0],
       // If this were a full application, I would likely pull team info from a database. In this case, we'll hard code it for ease of access
@@ -210,7 +210,7 @@ export default {
 
           const homeScore = homeTeam.score;
           const awayScore = awayTeam.score;
-          const score = (homeScore != null && awayScore != null) ? `${homeScore}-${awayScore}` : "TBD";
+          const score = (homeScore != null && awayScore != null) ? `${awayScore}-${homeScore}` : "TBD";
 
           const getPitcherStats = (pitcher) => {
             if (!pitcher) return null;
@@ -324,7 +324,7 @@ export default {
   methods: {
     formatDate(dateString) {
       const options = { year: 'numeric', month: 'short', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
+      return new Date(dateString + "T00:00:00").toLocaleDateString(undefined, options);
     },
     openGameView(game) {
       this.selectedGame = game;
@@ -343,7 +343,7 @@ export default {
       this.selectedPitcher = null;
       this.selectedOpponents = [];
       // If I had a login with saved preferences for org level, I would reset this to their preference. For now let's default to the MLB club
-      this.selectedTeam = { id: 139, name: 'Tampa Bay Rays', sportId: 1 };
+      this.selectedTeam = { id: 139, name: 'Tampa Bay Rays', sportId: 1, teamShort: 'Rays' };
     },
     async fetchData() {
       this.loading = true;
