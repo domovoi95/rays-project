@@ -481,7 +481,6 @@ export default {
   overflow: hidden;
 }
 
-// Some basic formatting for smaller screens. If this app was suspected to be used on tablets or phones I would spend a lot more time tuning this section
 @media (max-width: 960px) {
   .controls {
     flex-direction: column;
