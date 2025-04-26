@@ -84,6 +84,10 @@
       </v-btn>
 
       <single-game-view :game="selectedGame" :raysOrg = "selectedTeam" />
+      <br>
+      <v-btn @click="selectedGame = null" color="primary">
+        Back to Game List
+      </v-btn>
     </div>
     <div v-else-if="filteredData.length > 0">
       <v-table>

@@ -559,16 +559,4 @@ export default {
     white-space: pre-wrap;
   }
 }
-
-@media (max-width: 500px) {
-  .linescore-wrapper{
-    padding-left: 8rem;
-  }
-}
-
-@media (max-width: 400px) {
-  .linescore-wrapper{
-    padding-left: 12rem;
-  }
-}
 </style>
