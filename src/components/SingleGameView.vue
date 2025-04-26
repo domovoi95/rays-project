@@ -562,7 +562,7 @@ export default {
 
 @media (max-width: 500px) {
   .linescore-wrapper{
-    padding-left: 4rem;
+    -webkit-padding-before: 8rem;
   }
 }
 </style>
