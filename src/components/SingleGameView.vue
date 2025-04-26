@@ -376,7 +376,7 @@ export default {
 
 .linescore-title {
   text-align: center;
-  margin-bottom: 15px;
+  margin-top: 16px;
   color: #333;
   font-size: 1.5rem;
 }
