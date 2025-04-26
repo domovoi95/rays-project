@@ -4,12 +4,13 @@
 
     <div v-if="!selectedGame" class="controls">
       <span class="left-filter-container">
-      <v-label class="left-filter-label">Hide Spring Training Games</v-label>
+      <v-label class="left-filter-label">Show Spring Training Games</v-label>
       <v-switch
-          v-model="hideSpringTraining"
+          v-model="showSpringTraining"
           density="compact"
           hide-details
           class="left-filter"
+          color="green"
       ></v-switch>
       </span>
 
@@ -158,7 +159,7 @@ export default {
       data: null,
       loading: false,
       error: null,
-      hideSpringTraining: false,
+      showSpringTraining: false,
       selectedOutcome: null,
       selectedPitcher: null,
       selectedOpponents: [],
@@ -166,6 +167,8 @@ export default {
       sortOrder: 1,
       selectedGame: null,
       selectedTeam: { id: 139, name: 'Tampa Bay Rays', sportId: 1, teamShort: 'Rays' },
+      // This doesn't actually get all the spring training games, as some of them happened before March 1st this year. But since it was included in the provided endpoint, i'm going to assume that we dont want games before that date
+      // It would just be a matter of changing this startDate if we did want all the spring training games
       startDate: '2025-03-01',
       endDate: new Date().toISOString().split('T')[0],
       // If this were a full application, I would likely pull team info from a database. In this case, we'll hard code it for ease of access
@@ -290,7 +293,7 @@ export default {
           return false;
         }
         // Spring training filter
-        if (this.hideSpringTraining && game.seriesDescription === "Spring Training") {
+        if (!this.showSpringTraining && game.seriesDescription === "Spring Training") {
           return false;
         }
 
@@ -342,7 +345,7 @@ export default {
       }
     },
     clearAllFilters() {
-      this.hideSpringTraining = false;
+      // I initially had this reset the spring training filter too but it felt wrong. This would be a good conversation to have with potential users though!
       this.selectedOutcome = null;
       this.selectedPitcher = null;
       this.selectedOpponents = [];

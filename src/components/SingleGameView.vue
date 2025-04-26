@@ -75,8 +75,8 @@
         <p v-else>Status: {{ game.status }}</p>
       </div>
 
+      <h3 v-if="linescore" class="linescore-title">Linescore</h3>
       <div v-if="linescore" class="linescore-container">
-        <h3 class="linescore-title">Linescore</h3>
         <div class="linescore-wrapper">
           <table class="linescore-table">
             <thead>
