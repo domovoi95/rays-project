@@ -46,7 +46,7 @@
                 @error="handleImageError"
             >
             <img
-                v-else
+                v-else0
                 src="https://img.mlbstatic.com/mlb-photos/image/upload/w_213,d_people:generic:headshot:silo:current.png,q_auto:best,f_auto/v1/people/undefined/headshot/67/current"
                 alt="Pitcher image not available"
                 class="pitcher-image"
@@ -201,8 +201,6 @@ export default {
         { key: 'baseOnBalls', displayName: 'BB' },
         { key: 'hits', displayName: 'Hits' },
         { key: 'earnedRuns', displayName: 'ER' },
-        { key: 'wildPitches', displayName: 'WP' },
-        { key: 'passedBall', displayName: 'PB' },
         { key: 'homeRuns', displayName: 'HR' }
       ]
     }
