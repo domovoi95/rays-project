@@ -370,6 +370,8 @@ export default {
   margin: 30px auto 0;
   max-width: 800px;
   padding: 0 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .linescore-title {
@@ -380,7 +382,7 @@ export default {
 }
 
 .linescore-wrapper {
-  display: flex;
+  display: inline-block;
   justify-content: center;
   overflow-x: auto;
   padding: 10px 0;
@@ -503,11 +505,6 @@ export default {
   text-align: center;
 }
 
-@media (max-width: 750px) {
-  .linescore-wrapper{
-    padding-left: 6rem;
-  }
-}
 @media (max-width: 680px) {
   .pitchers-row {
     gap: 20px;
@@ -550,19 +547,6 @@ export default {
 
   .inning-cell, .total-cell {
     padding: 6px 8px;
-  }
-
-  .linescore-wrapper{
-    padding-left: 2rem;
-  }
-  .team-cell{
-    white-space: pre-wrap;
-  }
-}
-
-@media (max-width: 500px) {
-  .linescore-wrapper{
-    -webkit-padding-before: 8rem;
   }
 }
 </style>
