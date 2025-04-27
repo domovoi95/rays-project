@@ -203,14 +203,13 @@ export default {
       linescoreError: null,
       displayedStats: [
         { key: 'inningsPitched', displayName: 'IP' },
-        { key: 'era', displayName: 'ERA' },
+        { key: 'earnedRuns', displayName: 'ER' },
         { key: 'numberOfPitches', displayName: 'Pitches' },
         { key: 'strikes', displayName: 'Strikes' },
         { key: 'balls', displayName: 'Balls' },
         { key: 'strikeOuts', displayName: 'SO' },
         { key: 'baseOnBalls', displayName: 'BB' },
         { key: 'hits', displayName: 'Hits' },
-        { key: 'earnedRuns', displayName: 'ER' },
         { key: 'homeRuns', displayName: 'HR' }
       ]
     }
