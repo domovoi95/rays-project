@@ -1,23 +1,14 @@
-# rays-project
+# Tampa Bay Rays Game History
 
-## Project setup
+## Run The Following in the Root Directory of the Project
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Run and Open the Localhost Link
 ```
 npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
 ```
 
 ### Customize configuration
